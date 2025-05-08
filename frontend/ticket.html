@@ -1,9 +1,36 @@
 <!DOCTYPE html>
-<html>
-<head><title>Your Ticket</title></head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Ticket</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .ticket {
+      max-width: 400px;
+      margin: 50px auto;
+      border: 2px dashed #333;
+      padding: 30px;
+      border-radius: 15px;
+      background-color: #fefefe;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .ticket h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .ticket-info {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
 <body>
-  <h2>Your Ticket</h2>
-  <div id="ticketDetails"></div>
+  <div class="ticket">
+    <h2>🎫 Event Ticket</h2>
+    <div id="ticketDetails" class="ticket-info">
+      <p>Loading ticket...</p>
+    </div>
+  </div>
   <script>
     async function loadTicket() {
       const token = localStorage.getItem("token");
@@ -12,10 +39,15 @@
       });
       const ticket = await res.json();
       document.getElementById("ticketDetails").innerHTML = `
-        <p>Ticket No: ${ticket.ticket_number}</p>
-        <p>Issued: ${ticket.issued_at}</p>`;
+        <strong>Ticket No:</strong> ${ticket.ticket_number}<br>
+        <strong>Issued On:</strong> ${ticket.issued_at}<br>
+        <strong>Event:</strong> ${ticket.event_title || 'Event Name'}<br>
+        <strong>Location:</strong> ${ticket.event_location || 'Unknown'}<br>
+        <strong>Date:</strong> ${ticket.event_date || 'Unknown'}
+      `;
     }
     loadTicket();
   </script>
 </body>
 </html>
+
