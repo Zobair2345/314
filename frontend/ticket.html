@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head><title>Your Ticket</title></head>
+<body>
+  <h2>Your Ticket</h2>
+  <div id="ticketDetails"></div>
+  <script>
+    async function loadTicket() {
+      const token = localStorage.getItem("token");
+      const res = await fetch("http://localhost:8000/api/ticket/1/", {
+        headers: { Authorization: "Bearer " + token }
+      });
+      const ticket = await res.json();
+      document.getElementById("ticketDetails").innerHTML = `
+        <p>Ticket No: ${ticket.ticket_number}</p>
+        <p>Issued: ${ticket.issued_at}</p>`;
+    }
+    loadTicket();
+  </script>
+</body>
+</html>
